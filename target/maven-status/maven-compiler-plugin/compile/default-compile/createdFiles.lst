@@ -7,6 +7,7 @@ edu\progavud\parcial2pa\modelo\ConexionBD.class
 edu\progavud\parcial2pa\Vista\VistaServidor$3.class
 edu\progavud\parcial2pa\control\ControlJugador.class
 edu\progavud\parcial2pa\modelo\JugadorVO.class
+edu\progavud\parcial2pa\Vista\VistaAyuda.class
 edu\progavud\parcial2pa\modelo\ServidorVO.class
 edu\progavud\parcial2pa\Vista\VistaServidor.class
 edu\progavud\parcial2pa\Vista\VistaServidor$6.class
@@ -15,7 +16,6 @@ edu\progavud\parcial2pa\modelo\Carta.class
 edu\progavud\parcial2pa\modelo\ConexionPropertiesServidor.class
 edu\progavud\parcial2pa\Vista\VistaServidor$9.class
 edu\progavud\parcial2pa\control\LauncherServidor.class
-edu\progavud\parcial2pa\Vista\vista.class
 edu\progavud\parcial2pa\modelo\JugadorDAO.class
 edu\progavud\parcial2pa\Vista\VistaServidor$2.class
 edu\progavud\parcial2pa\Vista\VistaServidor$5.class

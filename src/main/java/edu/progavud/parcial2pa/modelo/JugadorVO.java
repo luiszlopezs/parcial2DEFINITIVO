@@ -49,7 +49,6 @@ public class JugadorVO {
 
     //Método que calcula la eficiencia, se calcula dividiendo el número de aciertos entre el número de intentos (esto determinará el ganador)
     public double calcularEficiencia() {
-//        if (intentos == 0) return 0.0;
         return (double) aciertos / intentos;
     }
 

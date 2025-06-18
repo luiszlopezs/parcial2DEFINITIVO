@@ -16,9 +16,9 @@ import java.util.Map;
 
 /**
  * Controlador de la interfaz gráfica del cliente.Se encarga de gestionar los
- eventos de las vistas {@link VistaJugador}, {@link VistaPrivada} y
- {@link VistaAyuda}, así como de coordinar acciones entre la vista y el
- controlador principal del cliente.
+ * eventos de las vistas {@link VistaJugador}, {@link VistaPrivada} y
+ * {@link VistaAyuda}, así como de coordinar acciones entre la vista y el
+ * controlador principal del cliente.
  *
  * @author hailen
  */
@@ -32,19 +32,17 @@ public class ControlVentanaJugador implements ActionListener {
 
 // Ventana de chat privado con un usuario
 //    private VistaPrivada vPrivada;
-
 // Nombre del cliente
     private String nombre;
-    
+
 // Contraseña del cliente
     private String clave;
-   
+
 // Dirección IP del servidor
     private ArrayList<String> datosPasar;
 
 // Mapa para ventanas privadas por cada amigo
 //    private Map<String, VistaPrivada> chatsPrivados = new HashMap<>();
-
     /**
      * Constructor de ControlVentanaCliente.
      *
@@ -54,17 +52,14 @@ public class ControlVentanaJugador implements ActionListener {
      *
      * @param cPrinc Controlador principal del cliente.
      */
-    public ControlVentanaJugador (ControlPrincipalJugador cPrinc) throws SQLException  {
+    public ControlVentanaJugador(ControlPrincipalJugador cPrinc) throws SQLException {
         this.cPrinc = cPrinc;
         cargarVistaJugador();
-//        cargarVistaPrivada();
         datosPasar = cPrinc.inicializarPuertosDesdeProps(vJugador.rutaJfileChooserPorts());
         nombre = vJugador.nombreJugador(); //Reciclado de vCliente
         vJugador.setNombreJugador(nombre); //Reciclado de vCliente, recibe del JOptionPane el nombre y contraseña
         clave = vJugador.claveJugador();
-        
-//        cPrinc.enviarInformacionJugador(nombre, contraseña); //Se envía la informacion del jugador
-//        ip = vJugador.numeroIP(); debe venir del properties
+
 
     }
 
@@ -93,7 +88,9 @@ public class ControlVentanaJugador implements ActionListener {
                 String mensaje = vJugador.getMensaje();
                 cPrinc.enviarMensajePublico(mensaje);
                 vJugador.getTxtMensage().setText("");
-                System.out.println(mensaje);
+                break;
+            case "AYUDA":
+                vJugador.mostrarVentanaAyuda();
                 break;
         }
     }
@@ -111,112 +108,12 @@ public class ControlVentanaJugador implements ActionListener {
         vJugador.getBtnEnviar().setActionCommand("CLIENTE_ENVIAR");
         vJugador.getBtnEnviar().addActionListener(this);
 
-//        vJugador.getBtnPrivado().setActionCommand("CLIENTE_PRIVADO");
-//        vJugador.getBtnPrivado().addActionListener(this);
+        vJugador.getItemAyuda().setActionCommand("AYUDA");
+        vJugador.getItemAyuda().addActionListener(this);
 
 
     }
-    
 
-    /**
-     * Inicializa y configura la ventana de chat privado.
-     *
-     * <p>
-     * Asocia el botón de enviar mensaje con el comando "PRIVADO_ENVIAR" y lo
-     * vincula a este controlador como listener.</p>
-     */
-//    public void cargarVistaPrivada() {
-//        vPrivada = new VistaPrivada(this);
-//
-//        vPrivada.getBtnEnviar().setActionCommand("PRIVADO_ENVIAR");
-//        vPrivada.getBtnEnviar().addActionListener(this);
-//    }
-//
-//    /**
-//     * Actualiza la lista de usuarios conectados mostrada en la ventana
-//     * principal del cliente.
-//     *
-//     * @param usuarios Arreglo con los nombres de los usuarios actualmente
-//     * conectados.
-//     */
-//    public void actualizarListaUsuarios(String[] usuarios) {
-//        vCliente.actualizarListaUsuarios(usuarios);
-//    }
-//
-//    /**
-//     * Devuelve la ventana de ayuda del cliente.
-//     *
-//     * @return Objeto {@link VistaAyuda} asociado al cliente.
-//     */
-//    public VistaAyuda getvAyuda() {
-//        return vAyuda;
-//    }
-//
-//    /**
-//     * Asigna la ventana de ayuda del cliente.
-//     *
-//     * @param vAyuda Objeto {@link VistaAyuda} a asignar.
-//     */
-//    public void setvAyuda(VistaAyuda vAyuda) {
-//        this.vAyuda = vAyuda;
-//    }
-//
-//    /**
-//     * Devuelve la ventana principal del cliente.
-//     *
-//     * @return Objeto {@link VistaJugador} actual.
-//     */
-//    public VistaJugador getvCliente() {
-//        return vCliente;
-//    }
-//
-//    /**
-//     * Asigna la ventana principal del cliente.
-//     *
-//     * @param vCliente Objeto {@link VistaJugador} a asignar.
-//     */
-//    public void setvCliente(VistaJugador vCliente) {
-//        this.vCliente = vCliente;
-//    }
-//
-//    /**
-//     * Devuelve la ventana de chat privado.
-//     *
-//     * @return Objeto {@link VistaPrivada} asociado.
-//     */
-//    public VistaPrivada getvPrivada() {
-//        return vPrivada;
-//    }
-//
-//    /**
-//     * Asigna la ventana de chat privado.
-//     *
-//     * @param vPrivada Objeto {@link VistaPrivada} a asignar.
-//     */
-//    public void setvPrivada(VistaPrivada vPrivada) {
-//        this.vPrivada = vPrivada;
-//    }
-
-    /**
-     * Muestra un mensaje recibido de un usuario amigo en la ventana privada.
-     *
-     * @param amigo Nombre del amigo que envió el mensaje.
-     * @param msg Contenido del mensaje recibido.
-     */
-//    public void mensageAmigo(String amigo, String msg) {
-//        VistaPrivada ventanaPrivada = chatsPrivados.get(amigo);
-//
-//        if (ventanaPrivada == null) {
-//            ventanaPrivada = new VistaPrivada(this);
-//            ventanaPrivada.setAmigo(amigo);
-//            ventanaPrivada.getBtnEnviar().setActionCommand("PRIVADO_ENVIAR:" + amigo);
-//            ventanaPrivada.getBtnEnviar().addActionListener(this);
-//            chatsPrivados.put(amigo, ventanaPrivada);
-//        }
-//
-//        ventanaPrivada.mostrarMsg(msg);
-//        ventanaPrivada.mostrar();
-//    }
 
     /**
      * Devuelve el nombre del usuario cliente.
@@ -241,12 +138,11 @@ public class ControlVentanaJugador implements ActionListener {
      *
      * @return Dirección IP como cadena de texto.
      */
-    
-
-        /**
+    /**
      * Obtiene la vista gráfica asociada al jugador.
      *
-     * @return Objeto {@code VistaJugador} que representa la interfaz del jugador cliente.
+     * @return Objeto {@code VistaJugador} que representa la interfaz del
+     * jugador cliente.
      */
     public VistaJugador getvJugador() {
         return vJugador;
@@ -264,7 +160,8 @@ public class ControlVentanaJugador implements ActionListener {
     /**
      * Establece la clave ingresada por el jugador.
      *
-     * @param clave Cadena de texto que representa la nueva contraseña a asignar.
+     * @param clave Cadena de texto que representa la nueva contraseña a
+     * asignar.
      */
     public void setClave(String clave) {
         this.clave = clave;
@@ -273,10 +170,12 @@ public class ControlVentanaJugador implements ActionListener {
     /**
      * Obtiene la lista de datos cargados desde el archivo de propiedades.
      * <p>
-     * Esta lista puede incluir información como puertos, usuarios y contraseñas.
+     * Esta lista puede incluir información como puertos, usuarios y
+     * contraseñas.
      * </p>
      *
-     * @return Lista de cadenas con los datos cargados para inicializar la conexión.
+     * @return Lista de cadenas con los datos cargados para inicializar la
+     * conexión.
      */
     public ArrayList<String> getDatosPasar() {
         return datosPasar;
@@ -285,13 +184,11 @@ public class ControlVentanaJugador implements ActionListener {
     /**
      * Establece la lista de datos cargados desde el archivo de propiedades.
      *
-     * @param datosPasar Lista de cadenas con información como puertos, usuarios o claves.
+     * @param datosPasar Lista de cadenas con información como puertos, usuarios
+     * o claves.
      */
     public void setDatosPasar(ArrayList<String> datosPasar) {
         this.datosPasar = datosPasar;
     }
-  
-    
-    
 
 }

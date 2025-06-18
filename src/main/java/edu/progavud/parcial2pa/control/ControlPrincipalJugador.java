@@ -131,14 +131,7 @@ public class ControlPrincipalJugador {
      * @param amigo Nombre del usuario destinatario.
      * @param contenido Contenido del mensaje a enviar.
      */
-//    public void enviarMensajePrivado(String amigo, String contenido) {
-//        try {
-//            cJugador.enviarMensajePrivado(amigo, contenido);
-//        } catch (IOException ex) {
-//            cVentana.getvJugador().mostrarMensajeDesconectado();
-//
-//        }
-//    }
+
     /**
      * Envía un mensaje público a todos los usuarios conectados utilizando el
      * controlador del cliente.
@@ -156,8 +149,5 @@ public class ControlPrincipalJugador {
 
     }
 
-    public void enviarInformacionJugador(String nombre, String contraseña) {
-        cJugador.enviarInformacionJugador(nombre, contraseña);
-    }
 
 }

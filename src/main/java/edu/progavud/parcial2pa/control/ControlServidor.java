@@ -100,6 +100,7 @@ public class ControlServidor {
         random = new Random();
         servidorVO = new ServidorVO();
         jugadorDAO = new JugadorDAO();
+        jugadorDAO.inicializarBD(cPrinc.getcVentana().getDatosPasar());
         this.listeniing = servidorVO.isListening();
 
     }
@@ -188,14 +189,12 @@ public class ControlServidor {
                         datosPasar.get(i),
                         datosPasar.get(i + 1)
                 );
-                System.out.println(datosPasar.get(i) + " " + datosPasar.get(i + 1));
             } catch (SQLException ex) {
                 System.getLogger(ControlServidor.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
             }
         }
 
-        System.out.println(datosPasar.get(0));
-        System.out.println(datosPasar.get(1));
+
     }
 
         /**
@@ -437,7 +436,7 @@ public class ControlServidor {
      */
     public void avisarError(int carta1, int carta2) {
         clientesActivos.get(turnoActual - 1).enviaMsg("   " + clientesActivos.get(turnoActual - 1).getJugadorVO().getNombre()
-                + " se ha equivocado \n" + "   Las cartas " + carta1 + " " + carta2 + " no coinciden");
+                + " se ha equivocado \n" + "   Las cartas " + carta1 + " y " + carta2 + " no coinciden");
         clientesActivos.get(turnoActual - 1).enviaMsg(clientesActivos.get(turnoActual - 1).getJugadorVO().getNombre(), "inhabilitar");
     }
 
@@ -461,7 +460,7 @@ public class ControlServidor {
      */
     public void avisarAcierto(int carta1, int carta2) {
         clientesActivos.get(turnoActual - 1).enviaMsg("   " + clientesActivos.get(turnoActual - 1).getJugadorVO().getNombre()
-                + " ha acertado \n" + "   Las cartas " + carta1 + " " + carta2 + " son pareja");
+                + " ha acertado \n" + "   Las cartas " + carta1 + " y " + carta2 + " son pareja");
     }
 
     /**
@@ -472,7 +471,7 @@ public class ControlServidor {
      */
     public void enviarMensajeJuegoIniciado() {
         for (ServidorThread jugador : clientesActivos) {
-            jugador.enviaMsg(jugador.getJugadorVO().getNombre(), "El Juego ha iniciado :)");
+            jugador.enviaMsg(jugador.getJugadorVO().getNombre(), "El Juego ha iniciado :) \n El formato de la tabla es de 5 filas y 8 columnas.");
         }
     }
 

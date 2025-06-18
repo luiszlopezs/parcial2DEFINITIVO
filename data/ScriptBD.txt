@@ -1,0 +1,7 @@
+CREATE DATABASE IF NOT EXISTS juegobd;
+USE juegobd;
+
+CREATE TABLE IF NOT EXISTS jugadorestabla (
+    Usuario VARCHAR(20) NOT NULL,
+    Clave VARCHAR(20) NOT NULL
+);

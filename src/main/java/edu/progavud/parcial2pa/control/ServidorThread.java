@@ -51,20 +51,12 @@ public class ServidorThread extends Thread {
 // Segundo flujo de salida (por ejemplo, para mensajes privados)
     DataOutputStream salida2 = null;
 
-     /**
-     * Bandera que indica si la partida ha sido iniciada para este jugador.
-     * <p>
-     * Se declara como {@code volatile} para asegurar que los cambios en su valor
-     * sean visibles entre hilos, evitando problemas de sincronización.
-     * </p>
-     */
-    private volatile boolean partidaIniciada = false;
-
-/**
+    /**
      * Nombre de usuario del cliente conectado.
      * <p>
-     * Este nombre se obtiene durante la autenticación y se utiliza para identificar al jugador
-     * en la interfaz del servidor y durante la comunicación.
+     * Este nombre se obtiene durante la autenticación y se utiliza para
+     * identificar al jugador en la interfaz del servidor y durante la
+     * comunicación.
      * </p>
      */
     String nameUser;
@@ -72,7 +64,8 @@ public class ServidorThread extends Thread {
     /**
      * Clave del usuario conectado.
      * <p>
-     * Se utiliza para verificar las credenciales del jugador durante el proceso de autenticación.
+     * Se utiliza para verificar las credenciales del jugador durante el proceso
+     * de autenticación.
      * </p>
      */
     String clave;
@@ -80,11 +73,12 @@ public class ServidorThread extends Thread {
     /**
      * Objeto que representa los datos del jugador autenticado.
      * <p>
-     * Contiene información como nombre, aciertos, intentos y eficiencia del jugador.
+     * Contiene información como nombre, aciertos, intentos y eficiencia del
+     * jugador.
      * </p>
      */
     private JugadorVO jugadorVO;
-    
+
 // Referencia al controlador del servidor
     private ControlServidor cServidor;
 
@@ -126,7 +120,7 @@ public class ServidorThread extends Thread {
         nameUser = name;
     }
 
-        /**
+    /**
      * Obtiene la clave del jugador conectado.
      *
      * @return Cadena de texto que representa la clave del jugador.
@@ -154,7 +148,8 @@ public class ServidorThread extends Thread {
     }
 
     /**
-     * Establece el objeto {@code JugadorVO} con los datos del jugador conectado.
+     * Establece el objeto {@code JugadorVO} con los datos del jugador
+     * conectado.
      *
      * @param jugadorVO Objeto que contiene los datos del jugador.
      */
@@ -162,43 +157,21 @@ public class ServidorThread extends Thread {
         this.jugadorVO = jugadorVO;
     }
 
-
     /**
-     * Ejecuta el hilo que gestiona la comunicación con un cliente.
-     *
-     * <p>
-     * Este método realiza lo siguiente:</p>
-     * <ul>
-     * <li>Inicializa los flujos de entrada y salida.</li>
-     * <li>Lee el nombre del usuario conectado.</li>
-     * <li>Escucha continuamente los comandos del cliente:</li>
-     * <ul>
-     * <li><b>1:</b> Recibe un mensaje público y lo reenvía a todos los clientes
-     * conectados.</li>
-     * <li><b>2:</b> Envía al cliente la lista actual de usuarios
-     * conectados.</li>
-     * <li><b>3:</b> Recibe un mensaje privado y lo envía al destinatario
-     * correspondiente.</li>
-     * </ul>
-     * <li>Cuando el cliente se desconecta, lo elimina de la lista de clientes
-     * activos y actualiza la lista para los demás clientes.</li>
-     * </ul>
-     */
-    public void setPartidaIniciada(boolean estado) {
-        this.partidaIniciada = estado;
-    }
-
-        /**
-     * Método principal del hilo que gestiona la conexión y comunicación con un cliente jugador.
+     * Método principal del hilo que gestiona la conexión y comunicación con un
+     * cliente jugador.
      * <p>
      * Este método:
      * <ul>
-     *   <li>Establece los flujos de entrada y salida de datos del socket.</li>
-     *   <li>Recibe el nombre de usuario y la clave enviados por el cliente.</li>
-     *   <li>Verifica si el jugador está autenticado y si la partida aún no ha comenzado.</li>
-     *   <li>Agrega al jugador a la lista de clientes activos si es válido.</li>
-     *   <li>Escucha mensajes entrantes desde el cliente para realizar acciones como enviar coordenadas o mensajes privados.</li>
-     *   <li>Finaliza la conexión si el jugador no está autorizado, si hay más de 4 jugadores o si ya inició la partida.</li>
+     * <li>Establece los flujos de entrada y salida de datos del socket.</li>
+     * <li>Recibe el nombre de usuario y la clave enviados por el cliente.</li>
+     * <li>Verifica si el jugador está autenticado y si la partida aún no ha
+     * comenzado.</li>
+     * <li>Agrega al jugador a la lista de clientes activos si es válido.</li>
+     * <li>Escucha mensajes entrantes desde el cliente para realizar acciones
+     * como enviar coordenadas o mensajes privados.</li>
+     * <li>Finaliza la conexión si el jugador no está autorizado, si hay más de
+     * 4 jugadores o si ya inició la partida.</li>
      * </ul>
      * </p>
      */
@@ -218,12 +191,17 @@ public class ServidorThread extends Thread {
         int opcion = 0, numUsers = 0;
         String jugador = "", mencli = "";
         boolean estaAgregado = false;
-        System.out.println("holaaaa, paso por qquiii");
         boolean condicion = true;
         if (cServidor.getcPrinc().isIsPartidaIniciada()) {
             this.enviaMsgSalida(this.nameUser, "desconectado3");
             condicion = false;
         }
+
+        if (ControlServidor.clientesActivos.size() >= 4) {
+            this.enviaMsgSalida(this.nameUser, "desconectado2");
+            condicion = false;
+        }
+
         while (condicion) {
 
             try {
@@ -232,14 +210,8 @@ public class ServidorThread extends Thread {
                     break;
                 }
 
-                if (ControlServidor.clientesActivos.size() >= 4) {
-                    this.enviaMsgSalida(this.nameUser, "desconectado2");
-                    break;
-                }
-
                 if (!estaAgregado) {
                     jugadorVO = cServidor.verificarUsuario(this.nameUser, this.clave);
-                    System.out.println(jugadorVO.getNombre() + jugadorVO.getClave() + "ed-------------------------");
                     ControlServidor.clientesActivos.add(this);
                     cServidor.getcPrinc().getcVentana().habilitarBotonesAlIniciar(nameUser);
                     cServidor.getcPrinc().getcVentana().getvServidor().mostrar("Ingresó un nuevo Jugador: " + this.nameUser);
@@ -284,12 +256,6 @@ public class ServidorThread extends Thread {
 
         //        
         ControlServidor.clientesActivos.removeElement(this);
-//        if (ControlServidor.clientesActivos.size() < 2) {
-//            cServidor.getcPrinc().getcVentana().getvServidor().getBtnIniciarJuego().setEnabled(false);
-//        } else {
-//            cServidor.getcPrinc().getcVentana().getvServidor().getBtnIniciarJuego().setEnabled(false);
-//        }
-        System.out.println(ControlServidor.clientesActivos);
 
         try {
             cServidor.getcPrinc().getcVentana().getvServidor().mostrar("Se desconecto un usuario");
@@ -312,7 +278,6 @@ public class ServidorThread extends Thread {
     public void enviaMsg(String mencli2) {
         ServidorThread user = null;
         for (int i = 0; i < ControlServidor.clientesActivos.size(); i++) {
-            //cServidor.getcPrinc().getcVentana().getvServidor().mostrar("MENSAJE DEVUELTO:" + mencli2);
             try {
                 user = ControlServidor.clientesActivos.get(i);
                 user.salida2.writeInt(1);//opcion de mensage 
@@ -350,18 +315,23 @@ public class ServidorThread extends Thread {
         }
     }
 
-     /**
-     * Envía un mensaje de salida (desconexión o estado especial) al cliente desde el servidor.
-     * 
+    /**
+     * Envía un mensaje de salida (desconexión o estado especial) al cliente
+     * desde el servidor.
+     *
      * Este método escribe tres datos a través del flujo de salida `salida2`:
      * <ul>
-     *   <li>Un entero con el valor 3, que representa el tipo de mensaje (privado o de control).</li>
-     *   <li>El nombre del usuario que envía el mensaje.</li>
-     *   <li>El contenido del mensaje (por ejemplo, "desconectado", "desconectado2").</li>
+     * <li>Un entero con el valor 3, que representa el tipo de mensaje (privado
+     * o de control).</li>
+     * <li>El nombre del usuario que envía el mensaje.</li>
+     * <li>El contenido del mensaje (por ejemplo, "desconectado",
+     * "desconectado2").</li>
      * </ul>
-     * 
-     * @param jugador Nombre del jugador receptor del mensaje (parámetro no utilizado dentro del método).
-     * @param mencli Mensaje a enviar al cliente, indicando un estado o instrucción especial.
+     *
+     * @param jugador Nombre del jugador receptor del mensaje (parámetro no
+     * utilizado dentro del método).
+     * @param mencli Mensaje a enviar al cliente, indicando un estado o
+     * instrucción especial.
      */
     public void enviaMsgSalida(String jugador, String mencli) {
         try {

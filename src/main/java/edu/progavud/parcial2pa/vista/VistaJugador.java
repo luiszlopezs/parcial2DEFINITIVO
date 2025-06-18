@@ -13,7 +13,7 @@ import javax.swing.*;
  */
 public class VistaJugador extends JFrame {
 
-     // Controlador que maneja la lógica asociada a esta ventana
+    // Controlador que maneja la lógica asociada a esta ventana
     private ControlVentanaJugador cVentana;
 
     // Área de texto donde se muestran los mensajes recibidos o enviados
@@ -35,87 +35,88 @@ public class VistaJugador extends JFrame {
     private JLabel lblNombreUsuario;
 
     /**
- * Constructor de la clase VistaJugador.
- * 
- * Inicializa la ventana gráfica del jugador, asociando su controlador y configurando
- * sus componentes visuales.
- * 
- * @param cVentana instancia del controlador asociado a esta vista.
- */
-public VistaJugador(ControlVentanaJugador cVentana) {
-    super("Jugador - Vista"); // Título de la ventana
-    this.cVentana = cVentana;
+     * Constructor de la clase VistaJugador.
+     *
+     * Inicializa la ventana gráfica del jugador, asociando su controlador y
+     * configurando sus componentes visuales.
+     *
+     * @param cVentana instancia del controlador asociado a esta vista.
+     */
+    public VistaJugador(ControlVentanaJugador cVentana) {
+        super("Jugador - Vista"); // Título de la ventana
+        this.cVentana = cVentana;
 
-    // Inicializa los componentes gráficos de la ventana
-    initializeComponents();
+        // Inicializa los componentes gráficos de la ventana
+        initializeComponents();
 
-    // Organiza los componentes en el layout de la ventana
-    setupLayout();
+        // Organiza los componentes en el layout de la ventana
+        setupLayout();
 
-    // Muestra la ventana
-    this.setVisible(true);
-}
-
+        // Muestra la ventana
+        this.setVisible(true);
+    }
 
     /**
- * Inicializa y configura los componentes gráficos de la vista del jugador.
- * 
- * - Configura el área de texto donde se muestran los mensajes recibidos.
- * - Configura el campo de texto donde el usuario puede escribir sus mensajes.
- * - Configura el botón de enviar con efectos visuales al pasar el cursor.
- * - Aplica estilos personalizados (colores, fuentes, bordes) para una apariencia tipo consola.
- */
-private void initializeComponents() {
-    txtMensage = new JTextField(30);
-    butEnviar = new JButton("Enviar");
-    panMostrar = new JTextArea();
+     * Inicializa y configura los componentes gráficos de la vista del jugador.
+     *
+     * - Configura el área de texto donde se muestran los mensajes recibidos. -
+     * Configura el campo de texto donde el usuario puede escribir sus mensajes.
+     * - Configura el botón de enviar con efectos visuales al pasar el cursor. -
+     * Aplica estilos personalizados (colores, fuentes, bordes) para una
+     * apariencia tipo consola.
+     */
+    private void initializeComponents() {
+        txtMensage = new JTextField(30);
+        butEnviar = new JButton("Enviar");
+        panMostrar = new JTextArea();
 
-    // Configuración del área de mensajes
-    panMostrar.setEditable(false);
-    panMostrar.setOpaque(true);
-    panMostrar.setBackground(new Color(30, 30, 30)); 
-    panMostrar.setForeground(Color.WHITE);
-    panMostrar.setFont(new Font("Comic Sans MS", Font.PLAIN, 14));
-    panMostrar.setLineWrap(true);
-    panMostrar.setWrapStyleWord(true);
+        // Configuración del área de mensajes
+        panMostrar.setEditable(false);
+        panMostrar.setOpaque(true);
+        panMostrar.setBackground(new Color(30, 30, 30));
+        panMostrar.setForeground(Color.WHITE);
+        panMostrar.setFont(new Font("Comic Sans MS", Font.PLAIN, 14));
+        panMostrar.setLineWrap(true);
+        panMostrar.setWrapStyleWord(true);
 
-    // Configuración del botón de envío
-    butEnviar.setBackground(Color.WHITE);
-    butEnviar.setForeground(Color.BLACK);
-    butEnviar.setFocusPainted(false);
-    butEnviar.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
-    butEnviar.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        // Configuración del botón de envío
+        butEnviar.setBackground(Color.WHITE);
+        butEnviar.setForeground(Color.BLACK);
+        butEnviar.setFocusPainted(false);
+        butEnviar.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
+        butEnviar.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 
-    // Efecto visual al pasar el mouse sobre el botón
-    butEnviar.addMouseListener(new java.awt.event.MouseAdapter() {
-        public void mouseEntered(java.awt.event.MouseEvent evt) {
-            butEnviar.setBackground(Color.BLACK);
-            butEnviar.setForeground(Color.WHITE);
-        }
-        public void mouseExited(java.awt.event.MouseEvent evt) {
-            butEnviar.setBackground(Color.WHITE);
-            butEnviar.setForeground(Color.BLACK);
-        }
-    });
+        // Efecto visual al pasar el mouse sobre el botón
+        butEnviar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                butEnviar.setBackground(Color.BLACK);
+                butEnviar.setForeground(Color.WHITE);
+            }
 
-    // Configuración del campo de texto para escribir mensajes
-    txtMensage.setBackground(new Color(40, 40, 40));
-    txtMensage.setForeground(new Color(0, 255, 127)); 
-    txtMensage.setFont(new Font("Comic Sans MS", Font.PLAIN, 14));
-}
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                butEnviar.setBackground(Color.WHITE);
+                butEnviar.setForeground(Color.BLACK);
+            }
+        });
 
+        // Configuración del campo de texto para escribir mensajes
+        txtMensage.setBackground(new Color(40, 40, 40));
+        txtMensage.setForeground(new Color(0, 255, 127));
+        txtMensage.setFont(new Font("Comic Sans MS", Font.PLAIN, 14));
+    }
 
-/**
- * Organiza y configura el diseño gráfico (layout) de los componentes en la interfaz del jugador.
- *
- * - Crea y configura el panel inferior con instrucciones, campo de texto para el mensaje,
- *   botón de envío y etiqueta de advertencias.
- * - Crea el panel de nombre del jugador con estilo visual.
- * - Configura el área de visualización de mensajes dentro de un JScrollPane.
- * - Estructura los paneles principales en un BorderLayout.
- * - Añade un menú de ayuda a la ventana.
- * - Define el tamaño, fondo y comportamiento de cierre de la ventana.
- */
+    /**
+     * Organiza y configura el diseño gráfico (layout) de los componentes en la
+     * interfaz del jugador.
+     *
+     * - Crea y configura el panel inferior con instrucciones, campo de texto
+     * para el mensaje, botón de envío y etiqueta de advertencias. - Crea el
+     * panel de nombre del jugador con estilo visual. - Configura el área de
+     * visualización de mensajes dentro de un JScrollPane. - Estructura los
+     * paneles principales en un BorderLayout. - Añade un menú de ayuda a la
+     * ventana. - Define el tamaño, fondo y comportamiento de cierre de la
+     * ventana.
+     */
     private void setupLayout() {
         JPanel panAbajo = new JPanel(new BorderLayout());
         panAbajo.setBackground(new Color(25, 25, 25));
@@ -123,7 +124,6 @@ private void initializeComponents() {
         lblInstruccion.setForeground(new Color(173, 216, 230)); // Azul claro cartoon
         lblInstruccion.setFont(new Font("Comic Sans MS", Font.PLAIN, 13));
         panAbajo.add(lblInstruccion, BorderLayout.NORTH);
-
 
         panAbajo.add(txtMensage, BorderLayout.CENTER);
         panAbajo.add(butEnviar, BorderLayout.EAST);
@@ -136,7 +136,6 @@ private void initializeComponents() {
         lblNombreUsuario = new JLabel("Jugador: ", SwingConstants.LEFT);
         lblNombreUsuario.setFont(new Font("Segoe UI", Font.BOLD, 13));
         lblNombreUsuario.setForeground(new Color(0, 191, 255)); // Azul eléctrico 
-
 
         // Eliminado el fondo con imagen
         JPanel fondoChat = new JPanel(new BorderLayout());
@@ -169,8 +168,9 @@ private void initializeComponents() {
 
     }
 
-        /**
+    /**
      * Solicita al usuario que ingrese su nombre mediante un cuadro de diálogo.
+     *
      * @return Nombre ingresado por el usuario.
      */
     public String nombreJugador() {
@@ -179,6 +179,7 @@ private void initializeComponents() {
 
     /**
      * Solicita al usuario que ingrese su clave mediante un cuadro de diálogo.
+     *
      * @return Clave ingresada por el usuario.
      */
     public String claveJugador() {
@@ -187,6 +188,7 @@ private void initializeComponents() {
 
     /**
      * Solicita al usuario que ingrese la dirección IP del servidor.
+     *
      * @return Dirección IP ingresada o "localhost" si no se cambia.
      */
     public String numeroIP() {
@@ -194,7 +196,8 @@ private void initializeComponents() {
     }
 
     /**
-     * Muestra un mensaje indicando que el usuario fue desconectado por credenciales incorrectas.
+     * Muestra un mensaje indicando que el usuario fue desconectado por
+     * credenciales incorrectas.
      */
     public void mostrarMensajeDesconectado() {
         JOptionPane.showMessageDialog(null, "El usuario y/o la clave son incorrectas por lo que ha sido desconectado");
@@ -208,15 +211,16 @@ private void initializeComponents() {
     }
 
     /**
-     * Muestra un mensaje indicando que la partida ya fue iniciada y no se puede ingresar.
+     * Muestra un mensaje indicando que la partida ya fue iniciada y no se puede
+     * ingresar.
      */
     public void mostrarMensajeIngresoProhibido() {
         JOptionPane.showMessageDialog(null, "La partida ya inicio, no puede ingresar");
     }
 
-
-        /**
+    /**
      * Retorna el área de texto donde se muestran los mensajes.
+     *
      * @return JTextArea utilizada para mostrar mensajes.
      */
     public JTextArea getPanMostrar() {
@@ -225,6 +229,7 @@ private void initializeComponents() {
 
     /**
      * Establece el área de texto donde se mostrarán los mensajes.
+     *
      * @param panMostrar JTextArea a utilizar.
      */
     public void setPanMostrar(JTextArea panMostrar) {
@@ -233,6 +238,7 @@ private void initializeComponents() {
 
     /**
      * Retorna el campo de texto donde el jugador escribe su mensaje.
+     *
      * @return JTextField utilizado para escribir mensajes.
      */
     public JTextField getTxtMensage() {
@@ -241,6 +247,7 @@ private void initializeComponents() {
 
     /**
      * Establece el campo de texto donde el jugador escribe su mensaje.
+     *
      * @param txtMensage JTextField a utilizar.
      */
     public void setTxtMensage(JTextField txtMensage) {
@@ -249,6 +256,7 @@ private void initializeComponents() {
 
     /**
      * Retorna el botón utilizado para enviar mensajes.
+     *
      * @return JButton de envío de mensajes.
      */
     public JButton getBtnEnviar() {
@@ -257,15 +265,16 @@ private void initializeComponents() {
 
     /**
      * Establece el botón utilizado para enviar mensajes.
+     *
      * @param butEnviar JButton a utilizar.
      */
     public void setBtnEnviar(JButton butEnviar) {
         this.butEnviar = butEnviar;
     }
 
-
-        /**
+    /**
      * Establece el nombre del jugador en la etiqueta correspondiente.
+     *
      * @param nombre Nombre del jugador que se mostrará en la interfaz.
      */
     public void setNombreJugador(String nombre) {
@@ -274,6 +283,7 @@ private void initializeComponents() {
 
     /**
      * Muestra un mensaje en el área de texto del chat.
+     *
      * @param msg Mensaje que se desea mostrar.
      */
     public void mostrarMsg(String msg) {
@@ -283,6 +293,7 @@ private void initializeComponents() {
     /**
      * Retorna el mensaje escrito por el usuario en el campo de texto,
      * eliminando espacios al inicio y al final.
+     *
      * @return Texto del mensaje ingresado.
      */
     public String getMensaje() {
@@ -291,6 +302,7 @@ private void initializeComponents() {
 
     /**
      * Retorna el ítem del menú "Ayuda".
+     *
      * @return JMenuItem correspondiente a la opción de ayuda.
      */
     public JMenuItem getItemAyuda() {
@@ -298,19 +310,21 @@ private void initializeComponents() {
     }
 
     /**
-     * Retorna la etiqueta de advertencia utilizada para mostrar mensajes importantes al usuario.
+     * Retorna la etiqueta de advertencia utilizada para mostrar mensajes
+     * importantes al usuario.
+     *
      * @return JLabel de advertencia.
      */
     public JLabel getLblAdvertencia() {
         return lblAdvertencia;
     }
 
-
     /**
-     * Abre un cuadro de diálogo para que el usuario seleccione un archivo de propiedades
-     * que contenga los puertos de conexión del servidor o cliente.
+     * Abre un cuadro de diálogo para que el usuario seleccione un archivo de
+     * propiedades que contenga los puertos de conexión del servidor o cliente.
      *
-     * @return Objeto File que representa el archivo seleccionado por el usuario.
+     * @return Objeto File que representa el archivo seleccionado por el
+     * usuario.
      */
     public File rutaJfileChooserPorts() {
         File f;
@@ -319,5 +333,22 @@ private void initializeComponents() {
 
         f = fc.getSelectedFile();
         return f;
+    }
+
+    /**
+     * Muestra una ventana modal con la información de ayuda para el usuario.
+     *
+     * <p>
+     * La ventana se crea como un {@link JDialog} no redimensionable, centrado
+     * respecto a la ventana principal, y contiene una instancia de
+     * {@link VistaAyuda}.</p>
+     */
+    public void mostrarVentanaAyuda() {
+        JDialog dialogoAyuda = new JDialog(this, "Ayuda", true);
+        dialogoAyuda.setContentPane(new VistaAyuda());
+        dialogoAyuda.setSize(520, 500);
+        dialogoAyuda.setResizable(false);
+        dialogoAyuda.setLocationRelativeTo(this);
+        dialogoAyuda.setVisible(true);
     }
 }

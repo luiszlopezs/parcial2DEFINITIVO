@@ -64,19 +64,7 @@ public class Jugador {
         salida.writeInt(1); 
         salida.writeUTF("   [" + this.nombre + "]: "+ instruccion);
     }
-        /**
-     * Envía al servidor la información del jugador: nombre y clave.
-     * Se usa el canal de salida para transmitir los datos al servidor.
-     *
-     * @param nombre Nombre del jugador.
-     * @param clave Clave del jugador.
-     * @throws IOException Si ocurre un error en la escritura de datos.
-     */
-    public void enviarInformacionJugador(String nombre, String clave) throws IOException{
-        salida.writeInt(0);
-        salida.writeUTF(nombre);
-        salida.writeUTF(clave);
-    }
+
 
         /**
      * Establece la conexión con el servidor utilizando dos sockets.
@@ -99,8 +87,7 @@ public class Jugador {
 
         entrada = new DataInputStream(comunication.getInputStream());
 
-        // Segundo socket (igual)
-        // Si vas a usar otro flujo en comunication2, igual hazlo bien ordenado.
+
         entrada2 = new DataInputStream(comunication2.getInputStream());
 
         salida.writeUTF(nombre);

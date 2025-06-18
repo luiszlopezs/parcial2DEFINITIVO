@@ -71,43 +71,6 @@ public class ControlJugador {
         
     }
     
-    public void enviarInformacionJugador(String nombre, String contraseña){
-        try {
-            jugador.enviarInformacionJugador(nombre, contraseña);
-        } catch (IOException ex) {
-            Logger.getLogger(ControlJugador.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    /**
-     * Envía un mensaje privado a un usuario específico.
-     *
-     * @param amigo Nombre del usuario destinatario.
-     * @param mensaje El contenido del mensaje privado.
-     * @throws IOException Si ocurre un error al enviar el mensaje.
-     */
-//    public void enviarMensajePrivado(String amigo, String mensaje) throws IOException {
-//        cliente.enviarMensajePrivado(amigo, mensaje);
-//    }
-
-    /**
-     * Actualiza la lista de usuarios conectados en la interfaz.
-     *
-     * @param usuarios Arreglo con los nombres de los usuarios conectados.
-     */
-//    public void actualizarListaUsuarios(String[] usuarios) {
-//        cPrinc.getcVentana().actualizarListaUsuarios(usuarios);
-//    }
-
-    /**
-     * Solicita al servidor la lista actual de usuarios conectados.
-     *
-     * @return Un vector con los nombres de los usuarios conectados.
-     * @throws IOException Si ocurre un error al obtener la lista.
-     */
-//    public Vector<String> pedirUsuarios() throws IOException {
-//        return cliente.pedirUsuarios();
-//    }
 
     /**
      * Devuelve el objeto cliente asociado a este controlador.

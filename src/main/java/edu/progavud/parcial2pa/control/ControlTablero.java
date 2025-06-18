@@ -77,7 +77,6 @@ public class ControlTablero {
             }
         }
         
-        System.out.println(matrizCartas);
     }
 
         /**

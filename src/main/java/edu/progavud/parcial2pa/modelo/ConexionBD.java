@@ -3,6 +3,7 @@ package edu.progavud.parcial2pa.modelo;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,8 +29,8 @@ import java.util.logging.Logger;
 public class ConexionBD {
 
     private static Connection cn = null;
-    private static String URLBD = "jdbc:mysql://localhost/juegobd";
-    private static String usuario = "root";
+    private static String URLBD = "";
+    private static String usuario = "";
     private static String contrasena = "";
    /**
      * Establece y devuelve la conexión a la base de datos MySQL.
@@ -71,10 +72,10 @@ public class ConexionBD {
      * @param props Objeto {@code Properties} que debe contener las claves:
      *              {@code urlBD}, {@code usuarioBD} y {@code contrasenaBD}.
      */
-    public static void inicializarBD(Properties props) {
-        URLBD = props.getProperty("urlBD");
-        usuario = props.getProperty("usuarioBD");
-        contrasena = props.getProperty("contrasenaBD");
+    public static void inicializarBD(ArrayList<String> datos) {
+        URLBD = datos.get(14);
+        usuario = datos.get(15);
+        contrasena = datos.get(16);
 
     }
 }

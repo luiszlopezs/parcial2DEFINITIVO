@@ -70,21 +70,7 @@ public class ControlPrincipalServidor {
 
     }
 
-//    public void iniciarPartida() {
-    ////        cServidor.setCartasEncontradas(0);
-////        cServidor.vaciarAciertosEIntentos();
-//        cServidor.cerrarEntradasDeJugadores();
-//        cServidor.enviarMensajeJuegoIniciado();
-//        cTablero.generarCartas();
-//        asignarCartasABotones();
-//        cVentana.activarBotonesCartas();
-//
-//        asignarNombresABotones();
-//        cVentana.siguienteTurnoEnVista(cServidor.getTurnoActual());
-//        // asignar turnos a jugadores
-//
-//    }
-//    
+ 
     
         /**
      * Inicia la partida del juego Concéntrese en el servidor.
@@ -97,22 +83,12 @@ public class ControlPrincipalServidor {
     public void iniciarPartida() {
         
         isPartidaIniciada = true;
-        // Primero cerramos las entradas ANTES de hacer cualquier otra cosa
-//        cServidor.cerrarEntradasDeJugadores();
 
-        // Pequeña pausa para asegurar que el cierre se complete
-//        try {
-//            Thread.sleep(100);
-//        } catch (InterruptedException e) {
-//            Thread.currentThread().interrupt();
-//        }
-
-        // Ahora continuamos con el resto de la lógica
         cServidor.enviarMensajeJuegoIniciado();
         cTablero.generarCartas();
         asignarCartasABotones();
         cVentana.activarBotonesCartas();
-//        asignarNombresABotones();
+
         cVentana.siguienteTurnoEnVista(cServidor.getTurnoActual());
 
         // Informar en la vista del servidor
@@ -156,14 +132,10 @@ public class ControlPrincipalServidor {
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 8; j++) {
                 int indiceBoton = botonesIndice[i][j];
-                System.out.println(indiceBoton);
+                
                 Carta carta = matrizCartas[i][j];
                 mapaBotonCarta.put(indiceBoton, carta);
-                System.out.println("aaaaaaaaaaaaaaaaaa" + mapaBotonCarta.get(indiceBoton));
-                System.out.println(mapaBotonCarta.get(indiceBoton).toString());
-                // Aquí puedes asignar el nuevo ActionListener o resetear el texto
-//                boton.setText("");
-//                boton.setEnabled(true);
+                
             }
         }
     }
@@ -187,16 +159,16 @@ public class ControlPrincipalServidor {
         System.out.println(c2);
         if (c1.getId() == c2.getId()) {
             // Pareja correcta
-            System.out.println("roorecootoot");
+            
             cServidor.avisarAcierto(btn1, btn2);
             cVentana.mostrarJDialogParejaEncontrada();
-            System.out.println("corecorotooo despueeeeeeeeees");
+            
 
             cServidor.incrementarAcierto();
         } else {
             cServidor.avisarError(btn1, btn2);
             cServidor.incrementarIntento();
-            System.out.println("no son pareja jajajajajajaj");
+            
 
             // No es pareja → volver a ocultar después de un momento
             Timer timer = new Timer(1000, e -> {
@@ -265,6 +237,9 @@ public class ControlPrincipalServidor {
                     datos.add(props.getProperty("clave" + i));
 
                 }
+                datos.add(props.getProperty("urlBD"));
+                datos.add(props.getProperty("usuarioBD"));
+                datos.add(props.getProperty("contrasenaBD"));
             } catch (IOException e) {
 
             }
@@ -274,13 +249,7 @@ public class ControlPrincipalServidor {
         return datos;
     }
 
-//    public void asignarNombresABotones() {
-//        int i = 1;
-//        for (ServidorThread jugador : ControlServidor.clientesActivos) {
-//            cVentana.habilitarBotonesAlIniciarSwitch(jugador.getJugadorVO().getNombre(), i);
-//            i++;
-//        }
-//    }
+
 
         /**
      * Obtiene el controlador del tablero del juego.
@@ -303,21 +272,7 @@ public class ControlPrincipalServidor {
     
     
 
-//    public int getPasarPort1() {
-//        return pasarPort1;
-//    }
-//
-//    public void setPasarPort1(int pasarPort1) {
-//        this.pasarPort1 = pasarPort1;
-//    }
-//
-//    public int getPasarPort2() {
-//        return pasarPort2;
-//    }
-//
-//    public void setPasarPort2(int pasarPort2) {
-//        this.pasarPort2 = pasarPort2;
-//    }
+
 
         /**
      * Verifica si la partida ha sido iniciada.

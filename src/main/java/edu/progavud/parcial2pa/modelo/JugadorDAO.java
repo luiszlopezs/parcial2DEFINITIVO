@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Properties;
 
 /**
@@ -47,8 +48,8 @@ public class JugadorDAO {
      *
      * @param props Propiedades con la URL, usuario y contraseña de la BD.
      */
-    public void inicializarBD(Properties props) {
-        ConexionBD.inicializarBD(props);
+    public void inicializarBD(ArrayList<String> datos) {
+        ConexionBD.inicializarBD(datos);
     }
 
     /**
