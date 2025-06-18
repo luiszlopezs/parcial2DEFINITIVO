@@ -73,6 +73,19 @@ public class ControlPrincipalJugador {
         this.cVentana = cVentana;
     }
 
+        /**
+ * Inicializa una lista de parámetros de configuración a partir de un archivo de propiedades.
+ * <p>
+ * Este método carga las propiedades desde un archivo `.properties` especificado
+ * y extrae los valores de las claves "props1", "props2" e "ipserver", 
+ * que se utilizan comúnmente para establecer configuraciones de red como puertos e IP del servidor.
+ * </p>
+ *
+ * @param archivo Archivo de propiedades desde el cual se leen los parámetros.
+ * @return Una lista con los valores de las propiedades: props1, props2 e ipserver.
+ *         Si el archivo es nulo o no se puede leer, retorna una lista vacía.
+ * @throws SQLException Esta excepción está declarada pero no se lanza dentro del método actualmente.
+ */
     public ArrayList<String> inicializarPuertosDesdeProps(File archivo) throws SQLException {
         ArrayList<String> datosPasar = new ArrayList<>();
         if (archivo != null) {

@@ -10,22 +10,46 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 /**
- *
+ * Clase encargada de gestionar la lógica del tablero de cartas del juego Concéntrese.
+ * <p>
+ * Controla la generación y organización de las cartas en una matriz de 5x8,
+ * y mantiene la referencia al controlador principal del servidor para coordinar acciones conjuntas.
+ * </p>
+ * 
  * @author hailen
  */
 public class ControlTablero {
-    
+
+    /**
+     * Matriz de cartas que representa el tablero del juego.
+     * Contiene las 20 parejas distribuidas aleatoriamente.
+     */
     private Carta[][] matrizCartas;
-    
+
+    /**
+     * Referencia al controlador principal del servidor.
+     * Se utiliza para comunicarse y coordinar acciones entre componentes.
+     */
     private ControlPrincipalServidor cPrinc;
 
+    /**
+     * Constructor que inicializa el controlador del tablero con la referencia al controlador principal.
+     *
+     * @param cPrinc Objeto {@code ControlPrincipalServidor} que orquesta el funcionamiento general del servidor.
+     */
     public ControlTablero(ControlPrincipalServidor cPrinc) {
         this.cPrinc = cPrinc;
     }
-    
-    
-    
+ 
 
+        /**
+     * Genera aleatoriamente las cartas del tablero y las asigna a una matriz de 5 filas por 8 columnas.
+     * <p>
+     * Se crean 20 pares de cartas con el mismo ID e imagen, se almacenan en una lista,
+     * se desordenan con {@code Collections.shuffle()}, y se asignan secuencialmente
+     * a la matriz {@code matrizCartas}, que representa el tablero del juego.
+     * </p>
+     */
     public void generarCartas() {
         matrizCartas = null;
         ArrayList<Carta> cartaLista = new ArrayList<>();
@@ -56,13 +80,23 @@ public class ControlTablero {
         System.out.println(matrizCartas);
     }
 
+        /**
+     * Obtiene la matriz de cartas generada para el tablero del juego.
+     *
+     * @return Matriz de objetos {@code Carta} que representa el estado actual del tablero.
+     */
     public Carta[][] getMatrizCartas() {
         return matrizCartas;
     }
 
+    /**
+     * Establece la matriz de cartas que representa el tablero del juego.
+     *
+     * @param matrizCartas Matriz de objetos {@code Carta} que será asignada como tablero actual.
+     */
     public void setMatrizCartas(Carta[][] matrizCartas) {
         this.matrizCartas = matrizCartas;
     }
-    
+   
     
 }

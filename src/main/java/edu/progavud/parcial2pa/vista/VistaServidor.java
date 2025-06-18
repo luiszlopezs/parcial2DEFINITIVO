@@ -22,13 +22,36 @@ import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 
 /**
- *
+ * Ventana principal de la interfaz gráfica del servidor.
+ * Esta clase gestiona la interfaz que permite visualizar los botones de cartas, 
+ * controlar el flujo de la partida y mostrar mensajes del servidor.
+ * Forma parte de la arquitectura MVC como la "Vista" del servidor.
+ * 
+ * Dispone de una matriz de botones que representan las cartas, y otra matriz para
+ * almacenar los índices asociados a cada carta. También mantiene una referencia
+ * al controlador que gestiona los eventos de esta vista.
+ * 
+ * Utiliza el logger para registrar eventos relevantes de la aplicación.
+ * 
  * @author hailen
  */
 public class VistaServidor extends javax.swing.JFrame {
 
+     /**
+     * Controlador asociado a esta vista, maneja la lógica de eventos.
+     */
     private ControlVentanaServidor cVentanaServidor;
+
+    /**
+     * Matriz de botones que representan las cartas en el tablero.
+     * Tiene 5 filas y 8 columnas (40 botones en total).
+     */
     private JButton[][] botones = new JButton[5][8];
+
+    /**
+     * Matriz de índices asociada a cada botón de carta. Se usa para 
+     * identificar las cartas emparejadas o destapadas.
+     */
     private int[][] indiceBotones = new int[5][8];
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VistaServidor.class.getName());

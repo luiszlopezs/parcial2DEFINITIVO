@@ -25,8 +25,19 @@ import java.util.Properties;
  */
 public class ConexionPropertiesServidor {
 
+    /**
+     * Objeto Properties que contiene las claves y valores del archivo de configuración.
+     */
     private Properties propiedades;
+
+    /**
+     * Flujo de entrada para leer el archivo de propiedades.
+     */
     private FileInputStream archivoIn;
+
+    /**
+     * Flujo de salida para escribir en el archivo de propiedades.
+     */
     private FileOutputStream archivoOut;
 
     /**

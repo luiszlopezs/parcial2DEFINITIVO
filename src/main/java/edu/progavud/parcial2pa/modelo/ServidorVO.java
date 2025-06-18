@@ -7,7 +7,11 @@ package edu.progavud.parcial2pa.modelo;
 import java.net.ServerSocket;
 
 
-
+/**
+ * Clase que representa un objeto de valor (VO) para el servidor.
+ * Puede ser utilizada para almacenar y transportar información del servidor
+ * como identificadores, configuraciones o estados relacionados con la ejecución.
+ */
 public class ServidorVO {
 
 // Socket de conexión principal
@@ -90,18 +94,38 @@ public class ServidorVO {
         this.listening = listening;
     }
 
+    /**
+     * Retorna el puerto principal de comunicación.
+     * 
+     * @return número del puerto 1
+     */
     public int getPort1() {
         return port1;
     }
 
+    /**
+     * Establece el número del puerto principal de comunicación.
+     * 
+     * @param port1 número del puerto 1
+     */
     public void setPort1(int port1) {
         this.port1 = port1;
     }
 
+    /**
+     * Retorna el puerto secundario de comunicación.
+     * 
+     * @return número del puerto 2
+     */
     public int getPort2() {
         return port2;
     }
 
+    /**
+     * Establece el número del puerto secundario de comunicación.
+     * 
+     * @param port2 número del puerto 2
+     */
     public void setPort2(int port2) {
         this.port2 = port2;
     }

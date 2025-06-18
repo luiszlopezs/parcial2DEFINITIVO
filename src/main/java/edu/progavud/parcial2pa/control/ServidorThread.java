@@ -51,15 +51,40 @@ public class ServidorThread extends Thread {
 // Segundo flujo de salida (por ejemplo, para mensajes privados)
     DataOutputStream salida2 = null;
 
+     /**
+     * Bandera que indica si la partida ha sido iniciada para este jugador.
+     * <p>
+     * Se declara como {@code volatile} para asegurar que los cambios en su valor
+     * sean visibles entre hilos, evitando problemas de sincronización.
+     * </p>
+     */
     private volatile boolean partidaIniciada = false;
 
-// Lista estática de hilos de clientes activos
-// Nombre de usuario del cliente conectado
+/**
+     * Nombre de usuario del cliente conectado.
+     * <p>
+     * Este nombre se obtiene durante la autenticación y se utiliza para identificar al jugador
+     * en la interfaz del servidor y durante la comunicación.
+     * </p>
+     */
     String nameUser;
+
+    /**
+     * Clave del usuario conectado.
+     * <p>
+     * Se utiliza para verificar las credenciales del jugador durante el proceso de autenticación.
+     * </p>
+     */
     String clave;
 
+    /**
+     * Objeto que representa los datos del jugador autenticado.
+     * <p>
+     * Contiene información como nombre, aciertos, intentos y eficiencia del jugador.
+     * </p>
+     */
     private JugadorVO jugadorVO;
-
+    
 // Referencia al controlador del servidor
     private ControlServidor cServidor;
 
@@ -101,21 +126,42 @@ public class ServidorThread extends Thread {
         nameUser = name;
     }
 
+        /**
+     * Obtiene la clave del jugador conectado.
+     *
+     * @return Cadena de texto que representa la clave del jugador.
+     */
     public String getClave() {
         return clave;
     }
 
+    /**
+     * Establece la clave del jugador conectado.
+     *
+     * @param clave Clave que se asignará al jugador.
+     */
     public void setClave(String clave) {
         this.clave = clave;
     }
 
+    /**
+     * Obtiene el objeto {@code JugadorVO} asociado al jugador conectado.
+     *
+     * @return Instancia de {@code JugadorVO} con los datos del jugador.
+     */
     public JugadorVO getJugadorVO() {
         return jugadorVO;
     }
 
+    /**
+     * Establece el objeto {@code JugadorVO} con los datos del jugador conectado.
+     *
+     * @param jugadorVO Objeto que contiene los datos del jugador.
+     */
     public void setJugadorVO(JugadorVO jugadorVO) {
         this.jugadorVO = jugadorVO;
     }
+
 
     /**
      * Ejecuta el hilo que gestiona la comunicación con un cliente.
@@ -142,6 +188,20 @@ public class ServidorThread extends Thread {
         this.partidaIniciada = estado;
     }
 
+        /**
+     * Método principal del hilo que gestiona la conexión y comunicación con un cliente jugador.
+     * <p>
+     * Este método:
+     * <ul>
+     *   <li>Establece los flujos de entrada y salida de datos del socket.</li>
+     *   <li>Recibe el nombre de usuario y la clave enviados por el cliente.</li>
+     *   <li>Verifica si el jugador está autenticado y si la partida aún no ha comenzado.</li>
+     *   <li>Agrega al jugador a la lista de clientes activos si es válido.</li>
+     *   <li>Escucha mensajes entrantes desde el cliente para realizar acciones como enviar coordenadas o mensajes privados.</li>
+     *   <li>Finaliza la conexión si el jugador no está autorizado, si hay más de 4 jugadores o si ya inició la partida.</li>
+     * </ul>
+     * </p>
+     */
     public void run() {
         cServidor.getcPrinc().getcVentana().getvServidor().mostrar(".::Esperando Mensajes :");
 
@@ -290,6 +350,19 @@ public class ServidorThread extends Thread {
         }
     }
 
+     /**
+     * Envía un mensaje de salida (desconexión o estado especial) al cliente desde el servidor.
+     * 
+     * Este método escribe tres datos a través del flujo de salida `salida2`:
+     * <ul>
+     *   <li>Un entero con el valor 3, que representa el tipo de mensaje (privado o de control).</li>
+     *   <li>El nombre del usuario que envía el mensaje.</li>
+     *   <li>El contenido del mensaje (por ejemplo, "desconectado", "desconectado2").</li>
+     * </ul>
+     * 
+     * @param jugador Nombre del jugador receptor del mensaje (parámetro no utilizado dentro del método).
+     * @param mencli Mensaje a enviar al cliente, indicando un estado o instrucción especial.
+     */
     public void enviaMsgSalida(String jugador, String mencli) {
         try {
             this.salida2.writeInt(3);

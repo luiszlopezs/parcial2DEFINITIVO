@@ -27,15 +27,24 @@ public class ControlPrincipalServidor {
     // Controlador encargado de gestionar la lógica del servidor
     private ControlServidor cServidor;
 
+    /** Controlador encargado de manejar las acciones sobre el tablero de juego. */
     private ControlTablero cTablero;
     
+    /** Indica si la partida ha sido iniciada o no. */
     private boolean isPartidaIniciada = false;
 
 //    private int pasarPort1;
 //    private int pasarPort2;
 // Controlador de la ventana de interfaz gráfica del servidor
     private ControlVentanaServidor cVentana;
-
+    
+        /**
+         * Mapa que relaciona la posición (índice del botón) con la carta correspondiente en el tablero.
+     * <p>
+     * Este mapa se utiliza para asociar cada botón del tablero con una instancia de {@code Carta},
+     * facilitando así la verificación de parejas y la gestión de las jugadas durante la partida.
+     * </p>
+     */
     private Map<Integer, Carta> mapaBotonCarta = new HashMap<>();
 
     /**
@@ -77,6 +86,14 @@ public class ControlPrincipalServidor {
 //    }
 //    
     
+        /**
+     * Inicia la partida del juego Concéntrese en el servidor.
+     * <p>
+     * Este método marca el inicio de la partida, notificando a los jugadores que el juego ha comenzado,
+     * generando las cartas del tablero, asignándolas a los botones y actualizando la vista del servidor.
+     * También activa los botones para que los jugadores puedan comenzar a jugar y muestra el turno inicial.
+     * </p>
+     */
     public void iniciarPartida() {
         
         isPartidaIniciada = true;
@@ -120,6 +137,15 @@ public class ControlPrincipalServidor {
         return cVentana;
     }
 
+        /**
+     * Asigna las cartas generadas en el tablero a cada botón del tablero en la interfaz.
+     * <p>
+     * Este método limpia el mapa actual de botones y cartas, y luego recorre la matriz
+     * de cartas del tablero y la matriz de índices de botones de la vista del servidor.
+     * Cada índice de botón se asocia con la carta correspondiente en el mapa
+     * {@code mapaBotonCarta} para facilitar su posterior identificación durante la partida.
+     * </p>
+     */
     public void asignarCartasABotones() {
         mapaBotonCarta.clear(); // importante si se reinicia
 
@@ -142,6 +168,18 @@ public class ControlPrincipalServidor {
         }
     }
 
+        /**
+     * Verifica si las cartas seleccionadas por los botones forman una pareja.
+     * <p>
+     * Compara las cartas asociadas a los botones recibidos. Si tienen el mismo ID,
+     * se considera una pareja correcta: se notifica al servidor, se muestra un mensaje en la vista
+     * y se incrementa el contador de aciertos. Si no coinciden, se notifica el error, se incrementa
+     * el contador de intentos, y tras una breve pausa, las cartas se ocultan nuevamente.
+     * </p>
+     *
+     * @param btn1 Índice del primer botón seleccionado.
+     * @param btn2 Índice del segundo botón seleccionado.
+     */
     public void verificarPareja(int btn1, int btn2) {
         Carta c1 = mapaBotonCarta.get(btn1);
         Carta c2 = mapaBotonCarta.get(btn2);
@@ -175,14 +213,41 @@ public class ControlPrincipalServidor {
         cVentana.setPrimerBoton(10000);
     }
 
+        /**
+     * Obtiene el mapa que asocia los índices de los botones con sus respectivas cartas.
+     *
+     * @return Mapa que relaciona cada botón con una instancia de {@code Carta}.
+     */
     public Map<Integer, Carta> getMapaBotonCarta() {
         return mapaBotonCarta;
     }
 
+    /**
+     * Establece el mapa que asocia los índices de los botones con sus respectivas cartas.
+     *
+     * @param mapaBotonCarta Mapa a asignar, donde cada índice representa un botón del tablero
+     *                       y cada valor es una instancia de {@code Carta}.
+     */
     public void setMapaBotonCarta(Map<Integer, Carta> mapaBotonCarta) {
         this.mapaBotonCarta = mapaBotonCarta;
     }
 
+
+        /**
+     * Inicializa una lista de configuraciones a partir de un archivo de propiedades.
+     * <p>
+     * Este método lee un archivo `.properties` que contiene información de configuración,
+     * incluyendo dos propiedades de red (props1 y props2), además de hasta seis pares de
+     * usuarios y contraseñas (usuario1-clave1 hasta usuario6-clave6). Todos estos valores
+     * se agregan a una lista y se devuelven en el orden en que se leen.
+     * </p>
+     *
+     * @param archivo Archivo de propiedades desde el cual se leen los parámetros de configuración.
+     * @return Una lista con las propiedades extraídas del archivo: props1, props2,
+     *         y los pares de usuario y clave del 1 al 6. Si el archivo es nulo o no se puede leer,
+     *         la lista se retorna vacía.
+     * @throws SQLException Esta excepción está declarada pero actualmente no se lanza dentro del método.
+     */
     public ArrayList<String> inicializarPuertosDesdeProps(File archivo) throws SQLException {
         ArrayList<String> datos = new ArrayList<>();
         if (archivo != null) {
@@ -217,13 +282,24 @@ public class ControlPrincipalServidor {
 //        }
 //    }
 
+        /**
+     * Obtiene el controlador del tablero del juego.
+     *
+     * @return Instancia de {@code ControlTablero} que gestiona la lógica del tablero.
+     */
     public ControlTablero getcTablero() {
         return cTablero;
     }
 
+    /**
+     * Establece el controlador del tablero del juego.
+     *
+     * @param cTablero Objeto {@code ControlTablero} que se asignará para manejar la lógica del tablero.
+     */
     public void setcTablero(ControlTablero cTablero) {
         this.cTablero = cTablero;
     }
+
     
     
 
@@ -243,11 +319,23 @@ public class ControlPrincipalServidor {
 //        this.pasarPort2 = pasarPort2;
 //    }
 
+        /**
+     * Verifica si la partida ha sido iniciada.
+     *
+     * @return {@code true} si la partida ya ha comenzado; {@code false} en caso contrario.
+     */
     public boolean isIsPartidaIniciada() {
         return isPartidaIniciada;
     }
 
+    /**
+     * Establece el estado de inicio de la partida.
+     *
+     * @param isPartidaIniciada Valor booleano que indica si la partida ha comenzado ({@code true})
+     *                          o aún no ha sido iniciada ({@code false}).
+     */
     public void setIsPartidaIniciada(boolean isPartidaIniciada) {
         this.isPartidaIniciada = isPartidaIniciada;
     }
+
 }

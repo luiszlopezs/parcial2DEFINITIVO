@@ -26,12 +26,37 @@ public class ControlVentanaServidor implements ActionListener {
     // Controlador principal del servidor
     private ControlPrincipalServidor cPrinc;
 
-// Vista gráfica del servidor
+    /**
+     * Vista gráfica del servidor.
+     * <p>
+     * Representa la interfaz de usuario que muestra el tablero del juego y los mensajes
+     * relacionados con la partida desde el lado del servidor.
+     * </p>
+     */
     private VistaServidor vServidor;
 
+    /**
+     * Índice del primer botón seleccionado por el jugador.
+     * <p>
+     * Se usa para llevar el control del primer clic del turno actual.
+     * El valor por defecto (10000) indica que aún no se ha seleccionado ningún botón.
+     * </p>
+     */
     private int primerBoton = 10000;
+
+    /**
+     * Bandera que indica si se está esperando que el jugador seleccione la segunda carta del turno.
+     */
     private boolean esperandoSegundo = false;
+
+    /**
+     * Lista de datos cargados desde un archivo de propiedades.
+     * <p>
+     * Contiene información como puertos, usuarios y contraseñas necesarias para la conexión y autenticación.
+     * </p>
+     */
     private ArrayList<String> datosPasar;
+
 
     /**
      * Constructor de ControlVentanaServidor.
@@ -257,12 +282,33 @@ public class ControlVentanaServidor implements ActionListener {
 
     }
 
+        /**
+     * Carga y muestra la vista gráfica del servidor.
+     * <p>
+     * Este método crea una nueva instancia de {@code VistaServidor}, le asigna
+     * los respectivos {@code ActionListener} a los botones, y la hace visible en pantalla.
+     * </p>
+     */
     public void cargarVistaServidor() {
         vServidor = new VistaServidor();
         asignarActionListeners();
         vServidor.setVisible(true);
     }
 
+        /**
+     * Asigna los {@code ActionListener} a todos los botones de la vista del servidor.
+     * <p>
+     * Este método:
+     * <ul>
+     *   <li>Asocia los 40 botones del tablero con un comando único y su listener.</li>
+     *   <li>Configura botones de control como "Iniciar Juego", "Enviar Resultados" y "Aumentar Intento".</li>
+     *   <li>Asigna eventos a los botones de coordenadas de jugadores (hasta 4 jugadores).</li>
+     *   <li>Oculta y desactiva todos los botones de control y etiquetas de estadísticas al inicio.</li>
+     *   <li>Desactiva todos los botones del tablero para evitar interacción antes del inicio del juego.</li>
+     * </ul>
+     * Esto garantiza que la interfaz inicie en un estado controlado y solo habilite componentes cuando sea necesario.
+     * </p>
+     */
     public void asignarActionListeners() {
         for (int i = 1; i <= 40; i++) {
             JButton boton = obtenerBotonCarta(i);
@@ -323,6 +369,17 @@ public class ControlVentanaServidor implements ActionListener {
 
     }
 
+        /**
+     * Retorna el botón del tablero correspondiente al número de carta indicado.
+     * <p>
+     * Este método utiliza una estructura {@code switch} para acceder a uno de los
+     * 40 botones de carta presentes en la vista del servidor. Si el número proporcionado
+     * no está en el rango 1 a 40, el método retorna {@code null}.
+     * </p>
+     *
+     * @param numero Número de carta (entre 1 y 40) cuyo botón se desea obtener.
+     * @return Objeto {@code JButton} correspondiente a la carta especificada, o {@code null} si el número es inválido.
+     */
     private JButton obtenerBotonCarta(int numero) {
         switch (numero) {
             case 1:
@@ -428,6 +485,16 @@ public class ControlVentanaServidor implements ActionListener {
         this.vServidor = vServidor;
     }
 
+        /**
+     * Maneja el clic sobre una carta del tablero y gestiona la lógica de selección de pareja.
+     * <p>
+     * Si es el primer clic del turno, se guarda el índice del botón y se muestra la imagen de la carta.
+     * Si es el segundo clic, se muestra la segunda carta, se deshabilita su botón,
+     * y se llama al método {@code verificarPareja()} para validar si forman una pareja.
+     * </p>
+     *
+     * @param btn Número del botón que ha sido presionado (de 1 a 40).
+     */
     public void manejarClick(int btn) {
 //        boton.setIcon(new ImageIcon(cPrinc.getMapaBotonCarta().get(boton).getRutaImg()));
 //        boton.setEnabled(false);
@@ -452,6 +519,13 @@ public class ControlVentanaServidor implements ActionListener {
 
     }
 
+        /**
+     * Muestra un cuadro de diálogo informando que se ha encontrado una pareja correcta.
+     * <p>
+     * Este método simplemente delega la acción a la vista del servidor,
+     * llamando al método {@code mostrarJDialogParejaEncontrada()} de {@code VistaServidor}.
+     * </p>
+     */
     public void mostrarJDialogParejaEncontrada() {
         vServidor.mostrarJDialogParejaEncontrada();
     }
@@ -466,6 +540,14 @@ public class ControlVentanaServidor implements ActionListener {
         obtenerBotonCarta(btn2).setEnabled(true);
     }
 
+        /**
+     * Activa los componentes gráficos básicos para iniciar una partida cuando hay al menos dos jugadores conectados.
+     * <p>
+     * Si el número de jugadores activos es igual o mayor a 2, se hacen visibles los botones y etiquetas
+     * necesarias para gestionar la partida: botones de control, botones por jugador y etiquetas de estadísticas
+     * (aciertos e intentos) para los dos primeros jugadores.
+     * </p>
+     */
     public void activarPartidaBasica() {
         if (ControlServidor.clientesActivos.size() >= 2) {
             vServidor.getBtnAumentarIntento().setVisible(true);
@@ -483,6 +565,15 @@ public class ControlVentanaServidor implements ActionListener {
         }
     }
 
+        /**
+     * Activa el botón correspondiente al jugador cuyo turno está en curso.
+     * <p>
+     * Según el número de jugador recibido, este método habilita el botón asociado
+     * en la vista del servidor para que el operador pueda registrar sus coordenadas.
+     * </p>
+     *
+     * @param i Número del jugador cuyo turno se debe activar (1 a 4).
+     */
     public void siguienteTurnoEnVista(int i) {
         switch (i) {
             case 1:
@@ -543,6 +634,20 @@ public class ControlVentanaServidor implements ActionListener {
 //
 //    }
 
+        /**
+     * Habilita y configura los botones y etiquetas correspondientes al jugador que acaba de unirse,
+     * dependiendo del número de jugadores actualmente conectados.
+     * <p>
+     * Este método:
+     * <ul>
+     *   <li>Hace visibles los botones y etiquetas de aciertos/intentados del jugador.</li>
+     *   <li>Personaliza el texto del botón para mostrar el nombre del jugador.</li>
+     *   <li>Activa los botones de control del juego (iniciar, aumentar intento, enviar resultados) a partir de 2 jugadores.</li>
+     * </ul>
+     * </p>
+     *
+     * @param nombre Nombre del jugador que se acaba de conectar, usado para personalizar el texto del botón.
+     */
     public void habilitarBotonesAlIniciar(String nombre) {
         if (ControlServidor.clientesActivos.size() >= 1 && ControlServidor.clientesActivos.size() < 2) {
             getvServidor().getBtnJug1().setVisible(true);
@@ -583,6 +688,14 @@ public class ControlVentanaServidor implements ActionListener {
         }
     }
 
+        /**
+     * Activa todos los botones del tablero y habilita el botón de aumentar intento.
+     * <p>
+     * Este método permite que los jugadores puedan comenzar a seleccionar cartas,
+     * activando los 40 botones correspondientes a las cartas del juego y el botón
+     * de control para aumentar los intentos desde la interfaz del servidor.
+     * </p>
+     */
     public void activarBotonesCartas() {
         for (int i = 1; i <= 40; i++) {
             JButton boton = obtenerBotonCarta(i);
@@ -593,6 +706,17 @@ public class ControlVentanaServidor implements ActionListener {
         vServidor.getBtnAumentarIntento().setEnabled(true);
     }
 
+        /**
+     * Actualiza en la vista del servidor los valores de aciertos e intentos del jugador actual.
+     * <p>
+     * Según el número de turno, se actualizan las etiquetas correspondientes del jugador con
+     * el número de aciertos e intentos que ha acumulado hasta el momento.
+     * </p>
+     *
+     * @param i Número de aciertos del jugador.
+     * @param i2 Número de intentos del jugador.
+     * @param turnoActual Número del jugador (1 a 4) cuyo puntaje debe ser actualizado.
+     */
     public void aumentarAciertoEnVista(int i, int i2, int turnoActual) {
         switch (turnoActual) {
             case 1:
@@ -614,6 +738,16 @@ public class ControlVentanaServidor implements ActionListener {
         }
     }
 
+        /**
+     * Actualiza el número de intentos del jugador actual en la vista y desactiva su botón de turno.
+     * <p>
+     * Según el número de turno recibido, se actualiza la etiqueta correspondiente con el número de intentos
+     * y se desactiva el botón asociado al jugador, indicando que ya realizó su jugada.
+     * </p>
+     *
+     * @param i Número de intentos realizados por el jugador.
+     * @param turnoActual Número del jugador actual (de 1 a 4).
+     */
     public void aumentarIntentosEnVista(int i, int turnoActual) {
         switch (turnoActual) {
             case 1:
@@ -635,6 +769,14 @@ public class ControlVentanaServidor implements ActionListener {
         }
     }
 
+       /**
+     * Inhabilita todos los botones de la partida en la interfaz del servidor.
+     * <p>
+     * Este método se ejecuta cuando finaliza el juego. Desactiva los botones de turno de los jugadores,
+     * el botón para aumentar intentos, los 40 botones del tablero y el botón de iniciar juego.
+     * Finalmente, activa el botón para enviar los resultados finales.
+     * </p>
+     */
     public void inhabilitarBotonesPartida() {
         vServidor.getBtnJug1().setEnabled(false);
         vServidor.getBtnJug2().setEnabled(false);
@@ -651,30 +793,60 @@ public class ControlVentanaServidor implements ActionListener {
         vServidor.getBtnEnviarResultados().setEnabled(true);
     }
 
+        /**
+     * Obtiene el índice del primer botón seleccionado por el jugador durante el turno.
+     *
+     * @return Número del primer botón seleccionado (1 a 40). Por defecto puede ser 10000 si aún no se ha seleccionado.
+     */
     public int getPrimerBoton() {
         return primerBoton;
     }
 
+    /**
+     * Establece el índice del primer botón seleccionado por el jugador.
+     *
+     * @param primerBoton Número del botón seleccionado como primer clic.
+     */
     public void setPrimerBoton(int primerBoton) {
         this.primerBoton = primerBoton;
     }
 
+    /**
+     * Indica si se está esperando que el jugador seleccione la segunda carta del turno.
+     *
+     * @return {@code true} si se espera la segunda selección; {@code false} en caso contrario.
+     */
     public boolean isEsperandoSegundo() {
         return esperandoSegundo;
     }
 
+    /**
+     * Establece el estado de espera de la segunda carta en un turno.
+     *
+     * @param esperandoSegundo {@code true} si se debe esperar otra selección; {@code false} si ya se completó el par.
+     */
     public void setEsperandoSegundo(boolean esperandoSegundo) {
         this.esperandoSegundo = esperandoSegundo;
     }
 
+    /**
+     * Obtiene la lista de datos cargados desde un archivo de propiedades.
+     *
+     * @return Lista con cadenas que representan datos como puertos, usuarios o claves.
+     */
     public ArrayList<String> getDatosPasar() {
         return datosPasar;
     }
 
+    /**
+     * Establece la lista de datos cargados desde un archivo de propiedades.
+     *
+     * @param datosPasar Lista con valores como puertos, usuarios o contraseñas.
+     */
     public void setDatosPasar(ArrayList<String> datosPasar) {
         this.datosPasar = datosPasar;
     }
-    
+  
     
 
 }
