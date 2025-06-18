@@ -25,6 +25,7 @@ edu\progavud\parcial2pa\Vista\VistaServidor$1.class
 edu\progavud\parcial2pa\control\JugadorThread.class
 edu\progavud\parcial2pa\modelo\ConexionPropertiesJugador.class
 edu\progavud\parcial2pa\control\ServidorThread.class
+edu\progavud\parcial2pa\Vista\VistaJugador$1.class
 edu\progavud\parcial2pa\control\ControlVentanaJugador.class
 edu\progavud\parcial2pa\Vista\VistaServidor$4.class
 edu\progavud\parcial2pa\control\ControlServidor.class

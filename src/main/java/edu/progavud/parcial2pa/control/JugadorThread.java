@@ -18,7 +18,14 @@ import java.util.Vector;
  */
 public class JugadorThread extends Thread {
 
+     /**
+     * Flujo de entrada para recibir datos desde el cliente conectado.
+     */
     DataInputStream entrada;
+
+    /**
+     * Controlador encargado de gestionar las acciones del jugador asociado a este hilo.
+     */
     private ControlJugador cJugador;
 //    public static Vector<ClienteThread> clientesActivos = new Vector(); //c
 

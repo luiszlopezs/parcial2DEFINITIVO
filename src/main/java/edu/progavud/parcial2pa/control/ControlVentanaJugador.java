@@ -243,29 +243,54 @@ public class ControlVentanaJugador implements ActionListener {
      */
     
 
+        /**
+     * Obtiene la vista gráfica asociada al jugador.
+     *
+     * @return Objeto {@code VistaJugador} que representa la interfaz del jugador cliente.
+     */
     public VistaJugador getvJugador() {
         return vJugador;
     }
 
+    /**
+     * Obtiene la clave ingresada por el jugador.
+     *
+     * @return Cadena de texto que representa la contraseña del jugador.
+     */
     public String getClave() {
         return clave;
     }
 
+    /**
+     * Establece la clave ingresada por el jugador.
+     *
+     * @param clave Cadena de texto que representa la nueva contraseña a asignar.
+     */
     public void setClave(String clave) {
         this.clave = clave;
     }
 
+    /**
+     * Obtiene la lista de datos cargados desde el archivo de propiedades.
+     * <p>
+     * Esta lista puede incluir información como puertos, usuarios y contraseñas.
+     * </p>
+     *
+     * @return Lista de cadenas con los datos cargados para inicializar la conexión.
+     */
     public ArrayList<String> getDatosPasar() {
         return datosPasar;
     }
 
+    /**
+     * Establece la lista de datos cargados desde el archivo de propiedades.
+     *
+     * @param datosPasar Lista de cadenas con información como puertos, usuarios o claves.
+     */
     public void setDatosPasar(ArrayList<String> datosPasar) {
         this.datosPasar = datosPasar;
     }
-
-
-    
-    
+  
     
     
 
